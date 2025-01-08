@@ -45,14 +45,14 @@ const Home = async () => {
 					Our Features
 				</h1>
 				<FeatureCards />
-				<div className="flex flex-col items-center mt-8 bg-red-50 w-full ">
+				<div className="flex flex-col items-center mt-8  w-full py-8 bg-[#f8fbfd] ">
 					<h1 className="text-[#0b3052] text-3xl font-bold mb-4 ">
 						Our Progress
 					</h1>
 					<ProgressCard />
 				</div>
 			</div>
-			<div className="bg-[#f1f6ff] flex justify-center items-center mt-4 gap-[-100px] ">
+			<div className="bg-[#f1f6ff] flex justify-center items-center py-4  gap-[-100px] ">
 				<div className="bg-[#fcc6c7] h-[400px] w-[400px] mt-16 rounded-xl px-4 py-4 flex flex-col items-center gap-8  mr-[-58px] z-10">
 					<h1 className="text-[#0b3052] text-3xl font-bold ">
 						Contact Us
@@ -80,7 +80,7 @@ const Home = async () => {
 				</div>
 				<Image
 					className="z-0"
-					src="/Contact us-rafiki.png"
+					src="/Contact-Us.png"
 					alt="Contact Us"
 					width={500}
 					height={300}

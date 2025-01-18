@@ -30,7 +30,7 @@ model Donor {
   userId    String   @unique // Unique because a donor corresponds to only one user
   user      User     @relation(fields: [userId], references: [id])
   medicalHistories MedicalHistory[]
-  appointments     Appointment[]
+  appointments     Appointment[]  
   donations        Donation[]
 }
 

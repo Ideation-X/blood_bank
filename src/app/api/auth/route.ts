@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
 				const donor = await prisma.donor.create({
 					data: {
 						userId: user.id,
-						bloodType: "",
+						bloodType: "N/A",
 					},
 				});
 			} else {

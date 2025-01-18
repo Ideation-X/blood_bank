@@ -1,4 +1,7 @@
 import React from "react";
+import { Droplet, Users, TruckIcon, Clock } from "lucide-react";
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Card,
   CardContent,
@@ -14,9 +17,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { Droplet, Users, TruckIcon, Clock } from "lucide-react";
 
 const BloodBankDashboard = () => {
   const inventoryData = [

@@ -1,14 +1,16 @@
 "use client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { CircleX, Loader } from "lucide-react";
+
+import { UserDetials } from "@/app/user-registration/page";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ProfileDisplay } from "@/components/donor-profile";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { useEffect, useState } from "react";
-import { ProfileDisplay } from "@/components/donor-profile";
-import { prisma } from "@/lib/prisma";
-import { UserDetials } from "@/app/user-registration/page";
-import { CircleX, Loader } from "lucide-react";
+
 
 interface Donor extends UserDetials {
 	donor: {
@@ -17,6 +19,7 @@ interface Donor extends UserDetials {
 }
 export default function ProfilePage() {
 	const [loading, setLoading] = useState<boolean>(false);
+	const [editUserInfo, setEditUserInfo] = useState<boolean>(false);
 
 	const [donor, setDonor] = useState<Donor>({
 		firstname: "",
@@ -29,7 +32,6 @@ export default function ProfilePage() {
 			bloodType: "",
 		},
 	});
-	const [editUserInfo, setEditUserInfo] = useState<boolean>(false);
 
 
 	useEffect(() => {
@@ -41,7 +43,9 @@ export default function ProfilePage() {
 					// set the user info
 					setDonor(res.data);
 				}
-			} catch (error) {}
+			} catch (error) {
+				console.log("Error occured while fetching userInfo: ", error);
+			}
 		};
 		// fetch the user detail
 		fetchUserInfo();
@@ -155,18 +159,7 @@ export default function ProfilePage() {
 										onChange={handleUpdateChange}
 									/>
 								</div>
-								<div className="space-y-2">
-									<Label htmlFor="DateOfBirth">
-										Date of Birth
-									</Label>
-									<Input
-										id="DateOfBirth"
-										name="DateOfBirth"
-										type="date"
-										value={donor.DateOfBirth}
-										onChange={handleUpdateChange}
-									/>
-								</div>
+								
 								<div className="space-y-2">
 									<Label htmlFor="address">Address</Label>
 									<Input

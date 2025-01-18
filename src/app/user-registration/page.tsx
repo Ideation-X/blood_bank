@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import React, { useState } from "react";
-import {  useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -20,24 +20,23 @@ export interface UserDetials {
 	firstname: string;
 	lastname: string;
 	phone: string;
-	DateOfBirth: string
+	DateOfBirth: string;
 	role: string;
-	address: string
+	address: string;
 }
 
 const SignUpForm = () => {
 	const router = useRouter();
+	// const[isStaff, setIsStaff] =
 
 	const [formData, setFormData] = useState<UserDetials>({
 		firstname: "",
 		lastname: "",
 		phone: "",
-		DateOfBirth:  "",
+		DateOfBirth: "",
 		role: "",
-		address: ""
+		address: "",
 	});
-	
-	
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -58,15 +57,13 @@ const SignUpForm = () => {
 		console.log("Form submitted:", formData);
 		try {
 			const res = await axios.post(`/api/auth`, formData);
-			if (res.status === 201){
+			if (res.status === 201) {
 				router.push("/");
 			}
-			console.log('this is user signup response : ', res.data);
-		}
-		catch(error){
+			console.log("this is user signup response : ", res.data);
+		} catch (error) {
 			console.log("this is error: ", error);
 		}
-
 	};
 
 	return (
@@ -153,6 +150,19 @@ const SignUpForm = () => {
 									</SelectContent>
 								</Select>
 							</div>
+							{formData.role === "staff" && (
+								<div className="space-y-2">
+									<Label htmlFor="bloodBankName">Blood Bank</Label>
+									<Input
+										id="bloodBankName"
+										name="bloodBankName"
+										placeholder="Enter Your Blood Bank Name"
+										value={formData.address}
+										onChange={handleChange}
+										required
+									/>
+								</div>
+							)}
 							<div className="space-y-2">
 								<Label htmlFor="address">Address</Label>
 								<Input
@@ -167,7 +177,10 @@ const SignUpForm = () => {
 						</div>
 
 						{/* Submit Button */}
-						<Button  className="w-full sm:w-auto" onClick={() => savePersonalInfo()}>
+						<Button
+							className="w-full sm:w-auto"
+							onClick={() => savePersonalInfo()}
+						>
 							Save Changes
 						</Button>
 					</div>

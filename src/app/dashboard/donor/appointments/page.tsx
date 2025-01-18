@@ -11,6 +11,17 @@ import {
 } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
 
+const prefferedTime: {time: string, value: string}[] = [
+  { time: '9', value: "9:00 AM"},
+  { time: '10', value: "10:00 AM"},
+  { time: '11', value: "11:00 AM"},
+  { time: '12', value: "12:00 PM"},
+  { time: '13', value: "1:00 PM"},
+  { time: '14', value: "2:00 PM"},
+  { time: '15', value: "3:00 PM"},
+  { time: '16', value: "4:00 PM"},
+]
+
 export default function AppointmentsPage() {
   return (
     <div className="space-y-6">
@@ -46,14 +57,19 @@ export default function AppointmentsPage() {
                     <SelectValue placeholder="Select time" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="9">9:00 AM</SelectItem>
-                    <SelectItem value="10">10:00 AM</SelectItem>
+                    {
+                      prefferedTime.map(slot => (
+                        <SelectItem key = {slot.time} value={slot.time} >{slot.value}</SelectItem>
+                      ))
+                    }
+                    
+                    {/* <SelectItem value="10">10:00 AM</SelectItem>
                     <SelectItem value="11">11:00 AM</SelectItem>
                     <SelectItem value="12">12:00 PM</SelectItem>
                     <SelectItem value="13">1:00 PM</SelectItem>
                     <SelectItem value="14">2:00 PM</SelectItem>
                     <SelectItem value="15">3:00 PM</SelectItem>
-                    <SelectItem value="16">4:00 PM</SelectItem>
+                    <SelectItem value="16">4:00 PM</SelectItem> */}
                   </SelectContent>
                 </Select>
               </div>

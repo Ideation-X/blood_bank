@@ -1,23 +1,23 @@
 import { prisma } from "@/lib/prisma";
+import { redirect } from "next/navigation";
 import { UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import axios from 'axios'
-import { UserDetials } from "@/app/user-registration/page";
 
 export const UserAvtar = async () => {
 
 	const { userId } = await auth();
+	console.log("USER ID: " ,userId);
 	if (!userId) {
 		redirect("/sign-in");
 	}
-
+	
 	const user = await prisma.user.findFirst({
 		where: {
 			clerkId: userId,
 		},
 	});
+	console.log("THIS IS USER: " ,user);
 
 	if (!user) {
 		redirect("/");

@@ -35,7 +35,7 @@ export function LearnAboutDonation() {
               </div>
               
               <div className="mt-6 space-y-4">
-                <p className="text-lg text-gray-700">
+                <p className="text-lg text-SECONDARY">
                   After donating blood, the body works to replenish the blood loss. 
                   This stimulates the production of new blood cells and in turn, 
                   helps in maintaining good health.

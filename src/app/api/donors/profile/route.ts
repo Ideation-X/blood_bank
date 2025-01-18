@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { authenticateUser } from "@/lib/auth";
+import { format } from "date-fns/format";
 
 // get donor Profile Info
 export async function GET(req: NextRequest) {
@@ -36,7 +37,11 @@ export async function GET(req: NextRequest) {
 			);
 		}
 
-		return NextResponse.json(donor, { status: 200 });
+		const date = new Date (donor.DateOfBirth);
+		const formattedDateOfBirth  = format(date, "dd-MM-yyyy");
+		const formattedDonor = {...donor, DateOfBirth: formattedDateOfBirth};
+
+		return NextResponse.json(formattedDonor, { status: 200 });
 	} catch (error) {
 		console.error(error);
 		return NextResponse.json(
@@ -55,18 +60,10 @@ export async function PUT(req: NextRequest) {
 	try {
 		const userId = authenticateUser(req);
 
-		const { firstname, lastname, phone, DateOfBirth, bloodType, address } =
+		const { firstname, lastname, phone, bloodType, address } =
 			await req.json();
-		console.log(
-			"donor updated data from frontend: ",
-			firstname,
-			lastname,
-			phone,
-			DateOfBirth,
-			bloodType,
-			address
-		);
-		const dateOfBirth = new Date(DateOfBirth);
+		
+		
 		const updatedDonor = await prisma.user.update({
 			where: {
 				clerkId: userId,
@@ -76,7 +73,6 @@ export async function PUT(req: NextRequest) {
 				lastname,
 				phone,
 				address,
-				DateOfBirth: dateOfBirth,
 				donor: {
 					update: {
 						bloodType,

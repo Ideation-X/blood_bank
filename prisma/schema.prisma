@@ -9,17 +9,19 @@ datasource db {
 
 model User {
   id        String   @id @default(cuid())
-  role      String   @default("donor")
   clerkId   String   @unique
+  role      String   @default("donor")
   firstname String
   lastname  String
-  phone     String
-  DateOfBirth  DateTime 
+  email     String
+  age       Int
+  phone     Int
+  state     String
+  district  String
   address   String
+  pincode   Int
   donor     Donor?  @relation
-  donorId   String?  // Optional foreign key, in case the user has a donor profile
-  staff     Staff?  @relation
-  staffId   String? 
+  staff     BloodBankStaff?  @relation
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -35,22 +37,44 @@ model Donor {
 }
 
 
-model Staff {
-  id        String   @id @default(cuid())
-  userId    String   @unique // Unique because a donor corresponds to only one user
-  user      User     @relation(fields: [userId], references: [id])
+model BloodBankStaff {
+  id          String   @id @default(cuid())
+  staffRole   StaffRole  // this will tell us what role the staff member has
   bloodBankId   String
   bloodBank  BloodBank @relation(fields: [bloodBankId], references: [id])
+  userId    String   @unique // Unique because a donor corresponds to only one user
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+enum StaffRole {
+  ADMIN
+  USER
 }
 
 model BloodBank {
-  id        String   @id @default(cuid())
-  name      String
-  address   String
-  phone     String
-  email     String
-  staff    Staff[]
+  id                    String   @id @default(cuid())
+  name                  String
+  email                 String
+  parentHospitalName    String
+  category              BloodBankCategory
+  contactNo             Int
+  firstRegistrationDate DateTime
+  fromDate              DateTime
+  toDate                DateTime
+  LicenseNo             String
+  state                 String
+  district              String
+  city                  String
+  staff                 BloodBankStaff[]
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
 }
+
+enum BloodBankCategory {
+  Government
+  Private
+}
+
 
 model MedicalHistory {
   id          String   @id @default(cuid())
@@ -71,6 +95,7 @@ model Appointment {
   createdAt DateTime @default(now())
 }
 
+// Create a new donation.
 model Donation {
   id         String   @id @default(cuid())
   donor      Donor    @relation(fields: [donorId], references: [id])
@@ -79,3 +104,29 @@ model Donation {
   bloodUnits Int
   location   String
 }
+
+model DonationInfo {
+  id                  String   @id @default(cuid())
+  donorType      DonorType  
+  donationType   DonationType 
+  componentTypes ComponentType[] 
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+}
+
+enum DonorType {
+  VOLUNTARY
+  FAMILY
+}
+
+enum DonationType {
+  WHOLE_BLOOD
+}
+
+enum ComponentType {
+  PACKED_RED_BLOOD_CELLS // PRBC
+  FRESH_FROZEN_PLASMA // FFP
+  PLATELET_CONCENTRATE
+}
+
